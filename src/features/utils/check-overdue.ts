@@ -1,6 +1,6 @@
 import type { TaskStatus } from '../libs/types';
 
-export function isOverdue({
+export function checkOverdue({
   dueDate,
   status,
 }: {

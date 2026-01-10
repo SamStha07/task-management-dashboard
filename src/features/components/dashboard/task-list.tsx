@@ -12,7 +12,7 @@ import { taskData } from '@/features/libs/tasks-data';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
-import { isOverdue } from '@/features/utils/is-overdue';
+import { checkOverdue } from '@/features/utils/check-overdue';
 
 const priorityColors = {
   low: 'bg-blue-50 text-blue-700 dark:bg-blue-950/50 dark:text-blue-400 border border-blue-200 dark:border-blue-900/50',
@@ -46,74 +46,78 @@ export default function TaskList() {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {taskData.map(task => (
-            <TableRow key={task.id}>
-              <TableCell>
-                <Checkbox
-                  checked={false}
-                  onCheckedChange={() => {}}
-                  aria-label="Mark task as complete"
-                  className="h-5 w-5"
-                />
-              </TableCell>
-              <TableCell className="">
-                <div className="w-[400px]">
-                  <h2 className="font-medium first-letter:capitalize">
-                    {task.title}
-                  </h2>
-                  <p className="truncate first-letter:capitalize">
-                    {task.description} aksd jasdj asjdb jas bdjsab jasdas
-                    jdasbdbasd asjdb sand asjkbdjasb djsa ashvd
-                  </p>
-                </div>
-              </TableCell>
-              <TableCell>
-                <Badge className={priorityColors[task.priority]}>
-                  {task.priority}
-                </Badge>
-              </TableCell>
-              <TableCell>
-                <Badge className={`${statusColors[task.status]} capitalize`}>
-                  {task.status === 'in-progress' ? 'In Progress' : task.status}
-                </Badge>
-              </TableCell>
-              <TableCell>
-                <div
-                  className={`flex items-center gap-1.5 text-xs ${
-                    isOverdue({ dueDate: task.dueDate, status: task.status }) &&
-                    'font-medium text-red-600 dark:text-red-500'
-                  }`}
-                >
-                  <Calendar className="h-3.5 w-3.5" />
-                  <span>
-                    {format(new Date(task.dueDate), 'MMM dd, yyyy')}
-                    {isOverdue({
-                      dueDate: task.dueDate,
-                      status: task.status,
-                    }) && ' (Overdue)'}
-                  </span>
-                </div>
-              </TableCell>
-              <TableCell className="space-x-2 text-right">
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="h-8 w-8 hover:bg-white/80"
-                  title="Edit task"
-                >
-                  <Edit2 className="h-3.5 w-3.5" />
-                </Button>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="h-8 w-8 hover:bg-white/80"
-                  title="Delete task"
-                >
-                  <Trash2 className="h-3.5 w-3.5 text-red-500" />
-                </Button>
-              </TableCell>
-            </TableRow>
-          ))}
+          {taskData.map(task => {
+            const isOverdue = checkOverdue({
+              dueDate: task.dueDate,
+              status: task.status,
+            });
+            return (
+              <TableRow key={task.id}>
+                <TableCell>
+                  <Checkbox
+                    checked={false}
+                    onCheckedChange={() => {}}
+                    aria-label="Mark task as complete"
+                    className="h-5 w-5"
+                  />
+                </TableCell>
+                <TableCell className="">
+                  <div className="w-[400px]">
+                    <h2 className="font-medium first-letter:capitalize">
+                      {task.title}
+                    </h2>
+                    <p className="truncate first-letter:capitalize">
+                      {task.description} aksd jasdj asjdb jas bdjsab jasdas
+                      jdasbdbasd asjdb sand asjkbdjasb djsa ashvd
+                    </p>
+                  </div>
+                </TableCell>
+                <TableCell>
+                  <Badge className={priorityColors[task.priority]}>
+                    {task.priority}
+                  </Badge>
+                </TableCell>
+                <TableCell>
+                  <Badge className={`${statusColors[task.status]} capitalize`}>
+                    {task.status === 'in-progress'
+                      ? 'In Progress'
+                      : task.status}
+                  </Badge>
+                </TableCell>
+                <TableCell>
+                  <div
+                    className={`flex items-center gap-1.5 text-xs ${
+                      isOverdue && 'font-medium text-red-600 dark:text-red-500'
+                    }`}
+                  >
+                    <Calendar className="h-3.5 w-3.5" />
+                    <span>
+                      {format(new Date(task.dueDate), 'MMM dd, yyyy')}
+                      {isOverdue && ' (Overdue)'}
+                    </span>
+                  </div>
+                </TableCell>
+                <TableCell className="space-x-2 text-right">
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="h-8 w-8 hover:bg-white/80"
+                    title="Edit task"
+                  >
+                    <Edit2 className="h-3.5 w-3.5" />
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="h-8 w-8 hover:bg-white/80"
+                    title="Delete task"
+                  >
+                    <Trash2 className="h-3.5 w-3.5 text-red-500" />
+                  </Button>
+                </TableCell>
+              </TableRow>
+            );
+          })}
         </TableBody>
       </Table>
     </div>
