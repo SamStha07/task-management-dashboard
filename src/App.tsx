@@ -1,11 +1,9 @@
-import './App.css';
-import { Button } from './components/ui/button';
+import TaskDashboardView from './features/views/task-dashboard-view';
 
 function App() {
   return (
     <div>
-      Hello
-      <Button>Hello</Button>
+      <TaskDashboardView />
     </div>
   );
 }

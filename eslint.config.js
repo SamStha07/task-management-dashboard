@@ -40,7 +40,7 @@ export default defineConfig([
       'prettier/prettier': [
         'error',
         {
-          // endOfLine: 'off'
+          endOfLine: 'auto',
         },
       ],
     },
