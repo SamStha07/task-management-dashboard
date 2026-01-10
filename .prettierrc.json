@@ -13,8 +13,7 @@
   "insertPragma": false,
   "requirePragma": false,
   "quoteProps": "as-needed",
-  "trailingComma": "none",
-  "eslintIntegration": true,
+  "trailingComma": "es5",
   "jsxSingleQuote": false,
   "plugins": ["prettier-plugin-tailwindcss"]
 }
