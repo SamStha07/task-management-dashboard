@@ -1,4 +1,3 @@
-import { Button } from '@/components/ui/button';
 import {
   Select,
   SelectContent,
@@ -7,7 +6,6 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import type { SortField } from '@/features/libs/types';
-import { ArrowUpDown } from 'lucide-react';
 
 const sortOptions: { label: string; value: SortField }[] = [
   { label: 'Due Date', value: 'dueDate' },
@@ -19,7 +17,7 @@ export default function TaskSort() {
   return (
     <div className="flex items-center gap-2">
       <Select value={''} onValueChange={() => {}}>
-        <SelectTrigger className="w-[180px]">
+        <SelectTrigger className="w-full sm:w-[150px]">
           <SelectValue placeholder="Sort by" />
         </SelectTrigger>
         <SelectContent>
@@ -30,9 +28,6 @@ export default function TaskSort() {
           ))}
         </SelectContent>
       </Select>
-      <Button variant="outline" size="icon">
-        <ArrowUpDown className="h-4 w-4" />
-      </Button>
     </div>
   );
 }
