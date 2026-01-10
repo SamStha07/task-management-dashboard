@@ -57,7 +57,7 @@ export default function TaskList() {
           <TableHeader>
             <TableRow>
               <TableHead className="w-[40px]"></TableHead>
-              <TableHead className="w-[600px]">Task</TableHead>
+              <TableHead className="w-[200px] lg:w-[600px]">Task</TableHead>
               <TableHead>Priority</TableHead>
               <TableHead>Status</TableHead>
               <TableHead>Due Date</TableHead>
@@ -93,7 +93,7 @@ export default function TaskList() {
                     />
                   </TableCell>
                   <TableCell className="">
-                    <div className="w-[600px]">
+                    <div className="w-[200px] lg:w-[600px]">
                       <h2 className="font-medium first-letter:capitalize">
                         {task.title}
                       </h2>
