@@ -1,5 +1,5 @@
 import { format } from 'date-fns';
-import { Edit2, Trash2 } from 'lucide-react';
+import { Calendar, Edit2, Trash2 } from 'lucide-react';
 import {
   Table,
   TableBody,
@@ -12,6 +12,7 @@ import { taskData } from '@/features/libs/tasks-data';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
+import { isOverdue } from '@/features/utils/is-overdue';
 
 const priorityColors = {
   low: 'bg-blue-50 text-blue-700 dark:bg-blue-950/50 dark:text-blue-400 border border-blue-200 dark:border-blue-900/50',
@@ -77,7 +78,21 @@ export default function TaskList() {
                 </Badge>
               </TableCell>
               <TableCell>
-                {format(new Date(task.dueDate), 'MMM dd, yyyy')}
+                <div
+                  className={`flex items-center gap-1.5 text-xs ${
+                    isOverdue({ dueDate: task.dueDate, status: task.status }) &&
+                    'font-medium text-red-600 dark:text-red-500'
+                  }`}
+                >
+                  <Calendar className="h-3.5 w-3.5" />
+                  <span>
+                    {format(new Date(task.dueDate), 'MMM dd, yyyy')}
+                    {isOverdue({
+                      dueDate: task.dueDate,
+                      status: task.status,
+                    }) && ' (Overdue)'}
+                  </span>
+                </div>
               </TableCell>
               <TableCell className="space-x-2 text-right">
                 <Button
