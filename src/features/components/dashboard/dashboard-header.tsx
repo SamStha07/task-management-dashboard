@@ -1,19 +1,19 @@
+import { Plus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { TaskFilterDrawer } from './task-filter-drawer';
 import TaskFilters from './task-filters';
 import TaskSearch from './task-search';
 import TaskSort from './task-sort';
-import { Plus } from 'lucide-react';
 
 export default function DashboardHeader() {
   return (
-    <div className="px-4 py-6 sm:py-8">
+    <div className="">
       <h1 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl dark:text-white">
         Tasks Dashboard
       </h1>
 
       {/* Controls */}
-      <div className="my-6 flex flex-col gap-4">
+      <div className="mt-4 flex flex-col gap-4">
         {/* Top row: Search and Add Task */}
         <div className="flex flex-col items-center gap-3 sm:flex-row">
           <div className="w-full sm:flex-1">

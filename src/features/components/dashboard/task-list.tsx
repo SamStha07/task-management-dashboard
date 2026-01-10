@@ -1,0 +1,106 @@
+import { format } from 'date-fns';
+import { Edit2, Trash2 } from 'lucide-react';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
+import { taskData } from '@/features/libs/tasks-data';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Checkbox } from '@/components/ui/checkbox';
+
+const priorityColors = {
+  low: 'bg-blue-50 text-blue-700 dark:bg-blue-950/50 dark:text-blue-400 border border-blue-200 dark:border-blue-900/50',
+  medium:
+    'bg-amber-50 text-amber-700 dark:bg-amber-950/50 dark:text-amber-400 border border-amber-200 dark:border-amber-900/50',
+  high: 'bg-orange-50 text-orange-700 dark:bg-orange-950/50 dark:text-orange-400 border border-orange-200 dark:border-orange-900/50',
+  critical:
+    'bg-red-50 text-red-700 dark:bg-red-950/50 dark:text-red-400 border border-red-200 dark:border-red-900/50',
+};
+
+const statusColors = {
+  todo: 'bg-slate-50 text-slate-700 dark:bg-slate-900/50 dark:text-slate-400 border border-slate-200 dark:border-slate-800',
+  'in-progress':
+    'bg-purple-50 text-purple-700 dark:bg-purple-950/50 dark:text-purple-400 border border-purple-200 dark:border-purple-900/50',
+  completed:
+    'bg-emerald-50 text-emerald-700 dark:bg-emerald-950/50 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-900/50',
+};
+
+export default function TaskList() {
+  return (
+    <div className="mt-6">
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead className="w-[40px]"></TableHead>
+            <TableHead className="w-[400px]">Task</TableHead>
+            <TableHead>Priority</TableHead>
+            <TableHead>Status</TableHead>
+            <TableHead>Due Date</TableHead>
+            <TableHead className="text-right">Actions</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {taskData.map(task => (
+            <TableRow key={task.id}>
+              <TableCell>
+                <Checkbox
+                  checked={false}
+                  onCheckedChange={() => {}}
+                  aria-label="Mark task as complete"
+                  className="h-5 w-5"
+                />
+              </TableCell>
+              <TableCell className="">
+                <div className="w-[400px]">
+                  <h2 className="font-medium first-letter:capitalize">
+                    {task.title}
+                  </h2>
+                  <p className="truncate first-letter:capitalize">
+                    {task.description} aksd jasdj asjdb jas bdjsab jasdas
+                    jdasbdbasd asjdb sand asjkbdjasb djsa ashvd
+                  </p>
+                </div>
+              </TableCell>
+              <TableCell>
+                <Badge className={priorityColors[task.priority]}>
+                  {task.priority}
+                </Badge>
+              </TableCell>
+              <TableCell>
+                <Badge className={`${statusColors[task.status]} capitalize`}>
+                  {task.status === 'in-progress' ? 'In Progress' : task.status}
+                </Badge>
+              </TableCell>
+              <TableCell>
+                {format(new Date(task.dueDate), 'MMM dd, yyyy')}
+              </TableCell>
+              <TableCell className="space-x-2 text-right">
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="h-8 w-8 hover:bg-white/80"
+                  title="Edit task"
+                >
+                  <Edit2 className="h-3.5 w-3.5" />
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="h-8 w-8 hover:bg-white/80"
+                  title="Delete task"
+                >
+                  <Trash2 className="h-3.5 w-3.5 text-red-500" />
+                </Button>
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </div>
+  );
+}

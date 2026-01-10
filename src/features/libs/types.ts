@@ -1,7 +1,6 @@
 export type TaskStatus = 'todo' | 'in-progress' | 'completed';
 export type TaskPriority = 'low' | 'medium' | 'high' | 'critical';
 export type SortField = 'dueDate' | 'priority' | 'createdAt';
-export type SortOrder = 'asc' | 'desc';
 
 export interface Task {
   id: string;
