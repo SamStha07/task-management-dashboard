@@ -37,7 +37,10 @@ const statusColors = {
 
 export default function TaskList() {
   const parentRef = useRef<HTMLDivElement>(null);
-  const tasks = useTaskStore(state => state.tasks);
+  const tasks = useTaskStore(state => {
+    return state.tasks;
+  });
+  console.log('🚀 ~ TaskList ~ tasks:', tasks);
 
   const rowVirtualizer = useVirtualizer({
     count: tasks.length,
@@ -64,6 +67,7 @@ export default function TaskList() {
               <TableHead>Priority</TableHead>
               <TableHead>Status</TableHead>
               <TableHead>Due Date</TableHead>
+              <TableHead>Tags</TableHead>
               <TableHead className="text-right">Actions</TableHead>
             </TableRow>
           </TableHeader>
@@ -148,6 +152,25 @@ export default function TaskList() {
                         {isOverdue && ' (Overdue)'}
                       </span>
                     </div>
+                  </TableCell>
+                  <TableCell>
+                    {!task.tags ? (
+                      <span className="text-muted-foreground text-xs italic">
+                        No tags
+                      </span>
+                    ) : (
+                      <div className="flex flex-wrap gap-1.5">
+                        {task.tags?.map((tag, index) => (
+                          <Badge
+                            key={index}
+                            variant="outline"
+                            className="px-2 py-0.5"
+                          >
+                            {tag}
+                          </Badge>
+                        ))}
+                      </div>
+                    )}
                   </TableCell>
                   <TableCell className="space-x-2 text-right">
                     <TaskFormDialog
