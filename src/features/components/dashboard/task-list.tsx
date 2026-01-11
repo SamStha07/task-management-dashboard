@@ -37,10 +37,8 @@ const statusColors = {
 
 export default function TaskList() {
   const parentRef = useRef<HTMLDivElement>(null);
-  const tasks = useTaskStore(state => {
-    return state.tasks;
-  });
-  console.log('🚀 ~ TaskList ~ tasks:', tasks);
+  const tasks = useTaskStore(state => state.tasks);
+  const markTaskAsCompleted = useTaskStore(state => state.markTaskAsCompleted);
 
   const rowVirtualizer = useVirtualizer({
     count: tasks.length,
@@ -64,8 +62,8 @@ export default function TaskList() {
             <TableRow>
               <TableHead className="w-[40px]"></TableHead>
               <TableHead className="w-[200px] lg:w-[500px]">Task</TableHead>
-              <TableHead>Priority</TableHead>
-              <TableHead>Status</TableHead>
+              <TableHead className="w-[100px]">Priority</TableHead>
+              <TableHead className="w-[100px]">Status</TableHead>
               <TableHead>Due Date</TableHead>
               <TableHead>Tags</TableHead>
               <TableHead className="text-right">Actions</TableHead>
@@ -108,18 +106,30 @@ export default function TaskList() {
                 >
                   <TableCell>
                     <Checkbox
-                      checked={false}
-                      onCheckedChange={() => {}}
+                      checked={task.status === 'completed'}
+                      onCheckedChange={() => markTaskAsCompleted(task.id)}
                       aria-label="Mark task as complete"
                       className="h-5 w-5"
                     />
                   </TableCell>
                   <TableCell className="">
                     <div className="w-[200px] lg:w-[500px]">
-                      <h2 className="font-medium first-letter:capitalize">
+                      <h2
+                        className={`font-medium first-letter:capitalize ${
+                          task.status === 'completed'
+                            ? 'text-slate-400 line-through dark:text-slate-600'
+                            : 'text-slate-900 dark:text-white'
+                        }`}
+                      >
                         {task.title}
                       </h2>
-                      <p className="truncate first-letter:capitalize">
+                      <p
+                        className={`truncate first-letter:capitalize ${
+                          task.status === 'completed'
+                            ? 'text-slate-400 line-through dark:text-slate-600'
+                            : 'text-slate-900 dark:text-white'
+                        }`}
+                      >
                         {task.description} aksd jasdj asjdb jas bdjsab jasdas
                         jdasbdbasd asjdb sand asjkbdjasb djsa ashvd
                       </p>

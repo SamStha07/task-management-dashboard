@@ -7,6 +7,7 @@ type TaskStore = {
   addTask: (input: CreateTaskInput) => void;
   updateTask: (input: UpdateTaskInput) => void;
   deleteTask: (id: string) => void;
+  markTaskAsCompleted: (id: string) => void;
 };
 
 export const useTaskStore = create<TaskStore>()(
@@ -43,6 +44,20 @@ export const useTaskStore = create<TaskStore>()(
         const filteredTasks = get().tasks.filter(task => task.id !== id);
         return set(() => ({
           tasks: filteredTasks,
+        }));
+      },
+      markTaskAsCompleted: (id: string) => {
+        const tasks = get().tasks.map(task =>
+          task.id === id
+            ? {
+                ...task,
+                status: task.status === 'completed' ? 'todo' : 'completed',
+                updatedAt: new Date().toISOString(),
+              }
+            : task
+        ) as Task[];
+        return set(() => ({
+          tasks: tasks,
         }));
       },
     }),
