@@ -16,6 +16,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { checkOverdue } from '@/features/utils/check-overdue';
 import { dateFormat } from '@/features/libs/date-format';
 import TaskFormDialog from './task-form-dialog';
+import TaskDeleteDialog from './task-delete-dialog';
 
 const priorityColors = {
   low: 'bg-blue-50 text-blue-700 dark:bg-blue-950/50 dark:text-blue-400 border border-blue-200 dark:border-blue-900/50',
@@ -146,14 +147,20 @@ export default function TaskList() {
                         </Button>
                       }
                     />
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      className="h-8 w-8 hover:bg-white/80"
-                      title="Delete task"
-                    >
-                      <Trash2 className="h-3.5 w-3.5 text-red-500" />
-                    </Button>
+
+                    <TaskDeleteDialog
+                      task={task}
+                      trigger={
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="h-8 w-8 hover:bg-white/80"
+                          title="Delete task"
+                        >
+                          <Trash2 className="h-3.5 w-3.5 text-red-500" />
+                        </Button>
+                      }
+                    />
                   </TableCell>
                 </TableRow>
               );
