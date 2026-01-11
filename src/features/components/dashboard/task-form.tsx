@@ -1,4 +1,5 @@
 import { useForm } from 'react-hook-form';
+import { CalendarIcon } from 'lucide-react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import type { Task } from '@/features/libs/types';
 import { taskFormSchema, type TaskFormData } from '@/features/libs/validations';
@@ -21,7 +22,6 @@ import {
 import { TagInput } from './tag-input';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
-import { CalendarIcon } from 'lucide-react';
 import { Calendar } from '@/components/ui/calendar';
 import {
   Popover,
@@ -40,17 +40,16 @@ export default function TaskForm({ onSubmit, onCancel, task }: TaskFormProps) {
   const form = useForm<TaskFormData>({
     resolver: zodResolver(taskFormSchema),
     defaultValues: {
-      title: '',
-      description: '',
-      dueDate: undefined,
-      priority: undefined,
-      status: undefined,
-      tags: undefined,
+      title: task ? task.title : '',
+      description: task ? task.description : '',
+      dueDate: task ? new Date(task.dueDate) : undefined,
+      priority: task ? task.priority : undefined,
+      status: task ? task.status : undefined,
+      tags: task ? task.tags : undefined,
     },
   });
 
   const handleSubmit = (data: TaskFormData) => {
-    console.log('🚀 ~ handleSubmit ~ data:', data);
     onSubmit(data);
     form.reset();
   };
@@ -177,7 +176,6 @@ export default function TaskForm({ onSubmit, onCancel, task }: TaskFormProps) {
                     />
                   </PopoverContent>
                 </Popover>
-                {/* <Input type="date" {...field} /> */}
               </FormControl>
               <FormMessage />
             </FormItem>

@@ -11,9 +11,9 @@ import {
 } from '@/components/ui/dialog';
 import useToogle from '@/hooks/use-toogle';
 import type { Task } from '@/features/libs/types';
-import TaskForm from './task-form';
 import type { TaskFormData } from '@/features/libs/validations';
 import { useTaskStore } from '@/features/stores/use-task-store';
+import TaskForm from './task-form';
 
 interface TaskFormDialogProps {
   task?: Task;
@@ -23,9 +23,17 @@ interface TaskFormDialogProps {
 export default function TaskFormDialog({ task, trigger }: TaskFormDialogProps) {
   const { open, setOpen } = useToogle();
   const addTask = useTaskStore(state => state.addTask);
+  const updateTask = useTaskStore(state => state.updateTask);
 
   const handleSubmit = (data: TaskFormData) => {
-    addTask(data);
+    if (task) {
+      updateTask({
+        id: task.id,
+        ...data,
+      });
+    } else {
+      addTask(data);
+    }
     setOpen(false);
   };
 

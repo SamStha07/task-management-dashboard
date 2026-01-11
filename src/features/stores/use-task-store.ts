@@ -1,10 +1,11 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import type { CreateTaskInput, Task } from '../libs/types';
+import type { CreateTaskInput, Task, UpdateTaskInput } from '../libs/types';
 
 type TaskStore = {
   tasks: Task[];
   addTask: (input: CreateTaskInput) => void;
+  updateTask: (input: UpdateTaskInput) => void;
 };
 
 export const useTaskStore = create<TaskStore>()(
@@ -21,6 +22,20 @@ export const useTaskStore = create<TaskStore>()(
         };
         return set(() => ({
           tasks: [newTask, ...get().tasks],
+        }));
+      },
+      updateTask: (input: UpdateTaskInput) => {
+        const tasks = get().tasks.map(task =>
+          task.id === input.id
+            ? {
+                ...task,
+                ...input,
+                updatedAt: new Date().toISOString(),
+              }
+            : task
+        );
+        return set(() => ({
+          tasks: tasks,
         }));
       },
     }),

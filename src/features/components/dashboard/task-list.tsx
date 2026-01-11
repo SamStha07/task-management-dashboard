@@ -9,15 +9,14 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-// import { taskData } from '@/features/libs/tasks-data';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { checkOverdue } from '@/features/utils/check-overdue';
 import { dateFormat } from '@/features/libs/date-format';
+import { useTaskStore } from '@/features/stores/use-task-store';
 import TaskFormDialog from './task-form-dialog';
 import TaskDeleteDialog from './task-delete-dialog';
-import { useTaskStore } from '@/features/stores/use-task-store';
 
 const priorityColors = {
   low: 'bg-blue-50 text-blue-700 dark:bg-blue-950/50 dark:text-blue-400 border border-blue-200 dark:border-blue-900/50',
@@ -61,13 +60,28 @@ export default function TaskList() {
           <TableHeader>
             <TableRow>
               <TableHead className="w-[40px]"></TableHead>
-              <TableHead className="w-[200px] lg:w-[600px]">Task</TableHead>
+              <TableHead className="w-[200px] lg:w-[500px]">Task</TableHead>
               <TableHead>Priority</TableHead>
               <TableHead>Status</TableHead>
               <TableHead>Due Date</TableHead>
               <TableHead className="text-right">Actions</TableHead>
             </TableRow>
           </TableHeader>
+
+          {tasks.length === 0 && (
+            <TableBody>
+              <TableRow className="w-full">
+                <TableCell colSpan={6} className="py-10 text-center">
+                  <p className="mb-1 text-base text-slate-600 dark:text-slate-400">
+                    No tasks found
+                  </p>
+                  <p className="text-sm text-slate-500 dark:text-slate-500">
+                    Create a new task to get started
+                  </p>
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          )}
 
           <TableBody>
             {rowVirtualizer.getVirtualItems().map((virtualRow, index) => {
@@ -97,7 +111,7 @@ export default function TaskList() {
                     />
                   </TableCell>
                   <TableCell className="">
-                    <div className="w-[200px] lg:w-[600px]">
+                    <div className="w-[200px] lg:w-[500px]">
                       <h2 className="font-medium first-letter:capitalize">
                         {task.title}
                       </h2>

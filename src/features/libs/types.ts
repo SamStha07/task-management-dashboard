@@ -15,3 +15,6 @@ export interface Task {
 }
 
 export type CreateTaskInput = Omit<Task, 'id' | 'createdAt' | 'updatedAt'>;
+export type UpdateTaskInput = {
+  id: string;
+} & Partial<CreateTaskInput>;
