@@ -6,6 +6,7 @@ type TaskStore = {
   tasks: Task[];
   addTask: (input: CreateTaskInput) => void;
   updateTask: (input: UpdateTaskInput) => void;
+  deleteTask: (id: string) => void;
 };
 
 export const useTaskStore = create<TaskStore>()(
@@ -36,6 +37,12 @@ export const useTaskStore = create<TaskStore>()(
         );
         return set(() => ({
           tasks: tasks,
+        }));
+      },
+      deleteTask: (id: string) => {
+        const filteredTasks = get().tasks.filter(task => task.id !== id);
+        return set(() => ({
+          tasks: filteredTasks,
         }));
       },
     }),

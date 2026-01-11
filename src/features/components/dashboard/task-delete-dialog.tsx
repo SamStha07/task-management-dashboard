@@ -11,6 +11,7 @@ import {
 } from '@/components/ui/dialog';
 import useToogle from '@/hooks/use-toogle';
 import type { Task } from '@/features/libs/types';
+import { useTaskStore } from '@/features/stores/use-task-store';
 
 interface TaskDeleteDialogProps {
   trigger: React.ReactNode;
@@ -22,8 +23,11 @@ export default function TaskDeleteDialog({
   task,
 }: TaskDeleteDialogProps) {
   const { open, setOpen } = useToogle();
+  const deleteTask = useTaskStore(state => state.deleteTask);
 
-  const handleDelete = () => {};
+  const handleDelete = () => {
+    deleteTask(task.id);
+  };
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
