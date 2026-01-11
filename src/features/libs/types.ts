@@ -8,7 +8,7 @@ export interface Task {
   description: string;
   status: TaskStatus;
   priority: TaskPriority;
-  dueDate: string; // ISO 8601 format
+  dueDate: Date; // ISO 8601 format
   createdAt: string;
   updatedAt: string;
   tags?: string[];

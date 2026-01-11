@@ -1,5 +1,4 @@
 import { useRef } from 'react';
-import { format } from 'date-fns';
 import { Calendar, Edit2, Trash2 } from 'lucide-react';
 import { useVirtualizer } from '@tanstack/react-virtual';
 import {
@@ -15,6 +14,8 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { checkOverdue } from '@/features/utils/check-overdue';
+import { dateFormat } from '@/features/libs/date-format';
+import TaskFormDialog from './task-form-dialog';
 
 const priorityColors = {
   low: 'bg-blue-50 text-blue-700 dark:bg-blue-950/50 dark:text-blue-400 border border-blue-200 dark:border-blue-900/50',
@@ -126,20 +127,25 @@ export default function TaskList() {
                     >
                       <Calendar className="h-3.5 w-3.5" />
                       <span>
-                        {format(new Date(task.dueDate), 'MMM dd, yyyy')}
+                        {dateFormat(task.dueDate)}
                         {isOverdue && ' (Overdue)'}
                       </span>
                     </div>
                   </TableCell>
                   <TableCell className="space-x-2 text-right">
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      className="h-8 w-8 hover:bg-white/80"
-                      title="Edit task"
-                    >
-                      <Edit2 className="h-3.5 w-3.5" />
-                    </Button>
+                    <TaskFormDialog
+                      task={task}
+                      trigger={
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="h-8 w-8 hover:bg-white/80"
+                          title="Edit task"
+                        >
+                          <Edit2 className="h-3.5 w-3.5" />
+                        </Button>
+                      }
+                    />
                     <Button
                       variant="ghost"
                       size="icon"

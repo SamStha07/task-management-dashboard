@@ -4,6 +4,7 @@ import { TaskFilterDrawer } from './task-filter-drawer';
 import TaskFilters from './task-filters';
 import TaskSearch from './task-search';
 import TaskSort from './task-sort';
+import TaskFormDialog from './task-form-dialog';
 
 export default function DashboardHeader() {
   return (
@@ -19,10 +20,14 @@ export default function DashboardHeader() {
           <div className="w-full sm:flex-1">
             <TaskSearch />
           </div>
-          <Button className="w-full sm:w-fit">
-            <Plus className="mr-1 h-4 w-4" />
-            Add Task
-          </Button>
+          <TaskFormDialog
+            trigger={
+              <Button className="w-full sm:w-fit">
+                <Plus className="mr-1 h-4 w-4" />
+                Add Task
+              </Button>
+            }
+          />
         </div>
 
         {/* Desktop: Filters and Sort */}
