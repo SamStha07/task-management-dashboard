@@ -9,7 +9,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { taskData } from '@/features/libs/tasks-data';
+// import { taskData } from '@/features/libs/tasks-data';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -17,6 +17,7 @@ import { checkOverdue } from '@/features/utils/check-overdue';
 import { dateFormat } from '@/features/libs/date-format';
 import TaskFormDialog from './task-form-dialog';
 import TaskDeleteDialog from './task-delete-dialog';
+import { useTaskStore } from '@/features/stores/use-task-store';
 
 const priorityColors = {
   low: 'bg-blue-50 text-blue-700 dark:bg-blue-950/50 dark:text-blue-400 border border-blue-200 dark:border-blue-900/50',
@@ -37,9 +38,10 @@ const statusColors = {
 
 export default function TaskList() {
   const parentRef = useRef<HTMLDivElement>(null);
+  const tasks = useTaskStore(state => state.tasks);
 
   const rowVirtualizer = useVirtualizer({
-    count: taskData.length,
+    count: tasks.length,
     getScrollElement: () => parentRef.current,
     estimateSize: () => 60,
     overscan: 20,
@@ -69,7 +71,7 @@ export default function TaskList() {
 
           <TableBody>
             {rowVirtualizer.getVirtualItems().map((virtualRow, index) => {
-              const task = taskData[virtualRow.index];
+              const task = tasks[virtualRow.index];
 
               const isOverdue = checkOverdue({
                 dueDate: task.dueDate,

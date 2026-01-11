@@ -12,6 +12,8 @@ import {
 import useToogle from '@/hooks/use-toogle';
 import type { Task } from '@/features/libs/types';
 import TaskForm from './task-form';
+import type { TaskFormData } from '@/features/libs/validations';
+import { useTaskStore } from '@/features/stores/use-task-store';
 
 interface TaskFormDialogProps {
   task?: Task;
@@ -20,6 +22,12 @@ interface TaskFormDialogProps {
 
 export default function TaskFormDialog({ task, trigger }: TaskFormDialogProps) {
   const { open, setOpen } = useToogle();
+  const addTask = useTaskStore(state => state.addTask);
+
+  const handleSubmit = (data: TaskFormData) => {
+    addTask(data);
+    setOpen(false);
+  };
 
   const defaultTrigger = (
     <Button>
@@ -42,7 +50,7 @@ export default function TaskFormDialog({ task, trigger }: TaskFormDialogProps) {
         </DialogHeader>
         <TaskForm
           task={task}
-          onSubmit={() => {}}
+          onSubmit={handleSubmit}
           onCancel={() => setOpen(false)}
         />
       </DialogContent>
