@@ -1,5 +1,6 @@
 import { Button } from '@/components/ui/button';
 import type { TaskStatus } from '@/features/libs/types';
+import { useTaskFilter } from '@/features/stores/use-task-filter';
 
 const filterOptions: { label: string; value: TaskStatus | 'all' }[] = [
   { label: 'All', value: 'all' },
@@ -9,10 +10,17 @@ const filterOptions: { label: string; value: TaskStatus | 'all' }[] = [
 ];
 
 export default function TaskFilters() {
+  const { setStatus, status } = useTaskFilter();
+
   return (
     <div className="flex flex-wrap gap-2">
       {filterOptions.map(option => (
-        <Button key={option.value} size="sm">
+        <Button
+          key={option.value}
+          size="sm"
+          variant={status === option.value ? 'default' : 'outline'}
+          onClick={() => setStatus(option.value)}
+        >
           {option.label}
         </Button>
       ))}

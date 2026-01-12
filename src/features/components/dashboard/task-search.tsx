@@ -1,14 +1,17 @@
-import { useCallback, useState } from 'react';
 import { Search, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import useDebounce from '@/hooks/use-debounce';
+import { useTaskFilter } from '@/features/stores/use-task-filter';
 
 export default function TaskSearch() {
-  const [searchValue, setSearchValue] = useState('');
+  const { searchQuery, setSearchQuery } = useTaskFilter();
+  const debounceValue = useDebounce(searchQuery, 300);
+  console.log('🚀 ~ TaskSearch ~ debounceValue:', debounceValue);
 
-  const handleClear = useCallback(() => {
-    setSearchValue('');
-  }, []);
+  const handleClear = () => {
+    setSearchQuery('');
+  };
 
   return (
     <div className="relative w-full sm:w-full sm:max-w-sm">
@@ -16,11 +19,11 @@ export default function TaskSearch() {
       <Input
         type="text"
         placeholder="Search tasks..."
-        value={searchValue}
-        onChange={e => setSearchValue(e.target.value)}
+        value={searchQuery}
+        onChange={e => setSearchQuery(e.target.value)}
         className="pr-10 pl-10"
       />
-      {searchValue && (
+      {searchQuery && (
         <Button
           variant="ghost"
           size="icon"

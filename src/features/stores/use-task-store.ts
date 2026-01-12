@@ -62,8 +62,7 @@ export const useTaskStore = create<TaskStore>()(
       },
     }),
     {
-      name: 'tasks-storage', // name of the item in the storage (must be unique)
-      // storage: createJSONStorage(() => localStorage), // (optional) by default, 'localStorage' is used
+      name: 'tasks-storage',
     }
   )
 );
