@@ -11,15 +11,13 @@ import {
 } from '@/components/ui/table';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
+import { Skeleton } from '@/components/ui/skeleton';
 import { useTaskStore } from '@/features/tasks/stores/use-task-store';
 import useFilterTasks from '@/features/tasks/hooks/use-filter-tasks';
-// import TaskFormDialog from './task-form-dialog';
-// import TaskDeleteDialog from './task-delete-dialog';
 import TaskStatusBadge from './task-status-badge';
 import TaskDueDate from './task-due-date';
 import TaskTags from './task-tags';
 import TaskPriority from './task-priority';
-import { Skeleton } from '@/components/ui/skeleton';
 
 const TaskFormDialog = lazy(() => import('./task-form-dialog'));
 const TaskDeleteDialog = lazy(() => import('./task-delete-dialog'));

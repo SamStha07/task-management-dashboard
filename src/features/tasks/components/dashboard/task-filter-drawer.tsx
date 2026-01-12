@@ -14,18 +14,16 @@ import useToogle from '@/hooks/use-toogle';
 import TaskFilters from './task-filters';
 import TaskSort from './task-sort';
 
-export const TaskFilterDrawer = () => {
+export default function TaskFilterDrawer() {
   const { open, setOpen } = useToogle();
 
   return (
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>
-        <div className="flex justify-end">
-          <Button variant="outline" size="sm" className="gap-2">
-            <SlidersHorizontal className="h-4 w-4" />
-            Filters & Sort
-          </Button>
-        </div>
+        <Button variant="outline" size="sm" className="gap-2">
+          <SlidersHorizontal className="h-4 w-4" />
+          Filters & Sort
+        </Button>
       </DrawerTrigger>
       <DrawerContent>
         <DrawerHeader>
@@ -61,4 +59,4 @@ export const TaskFilterDrawer = () => {
       </DrawerContent>
     </Drawer>
   );
-};
+}
