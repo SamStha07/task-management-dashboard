@@ -23,7 +23,7 @@ export default function DashboardHeader() {
           <div className="w-full sm:flex-1">
             <TaskSearch />
           </div>
-          <Suspense fallback={<Skeleton className="h-9 w-[110px]" />}>
+          <Suspense fallback={<Skeleton className="h-9 w-full sm:w-[110px]" />}>
             <TaskFormDialog
               trigger={
                 <Button className="w-full sm:w-fit">
