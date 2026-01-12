@@ -112,8 +112,7 @@ export default function TaskList() {
                             : 'text-slate-900 dark:text-white'
                         }`}
                       >
-                        {task.description} aksd jasdj asjdb jas bdjsab jasdas
-                        jdasbdbasd asjdb sand asjkbdjasb djsa ashvd
+                        {task.description}
                       </p>
                     </div>
                   </TableCell>
