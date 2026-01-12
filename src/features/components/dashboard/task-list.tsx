@@ -75,7 +75,7 @@ export default function TaskList() {
           {tasks.length === 0 && (
             <TableBody>
               <TableRow className="w-full">
-                <TableCell colSpan={6} className="py-10 text-center">
+                <TableCell colSpan={7} className="py-10 text-center">
                   <p className="mb-1 text-base text-slate-600 dark:text-slate-400">
                     No tasks found
                   </p>

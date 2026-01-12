@@ -7,6 +7,7 @@ export default function useFilterTasks() {
   const tasks = useTaskStore(state => state.tasks);
   const searchQuery = useTaskFilter(state => state.searchQuery);
   const status = useTaskFilter(state => state.status);
+  const sort = useTaskFilter(state => state.sort);
 
   const searchValue = useDebounce(searchQuery, 400);
 
@@ -27,8 +28,28 @@ export default function useFilterTasks() {
       result = result.filter(task => task.status === status);
     }
 
+    result.sort((a, b) => {
+      // new task will be at top
+      if (sort === 'createdAt') {
+        return (
+          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+        );
+      }
+      // task will be sorted based on which task is about to end
+      if (sort === 'dueDate') {
+        return new Date(a.dueDate).getTime() - new Date(b.dueDate).getTime();
+      }
+
+      //  critical task will be shown at first
+      if (sort === 'priority') {
+        const priorityOrder = { low: 1, medium: 2, high: 3, critical: 4 };
+        return priorityOrder[b.priority] - priorityOrder[a.priority];
+      }
+      return 0;
+    });
+
     return result;
-  }, [searchValue, tasks, status]);
+  }, [searchValue, tasks, status, sort]);
 
   return filteredtask;
 }
