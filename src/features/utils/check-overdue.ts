@@ -4,7 +4,7 @@ export function checkOverdue({
   dueDate,
   status,
 }: {
-  dueDate: Date;
+  dueDate: Date | string;
   status: TaskStatus;
 }) {
   return new Date(dueDate) < new Date() && status !== 'completed';
