@@ -15,6 +15,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { checkOverdue } from '@/features/utils/check-overdue';
 import { dateFormat } from '@/features/libs/date-format';
 import { useTaskStore } from '@/features/stores/use-task-store';
+import useFilterTasks from '@/features/hooks/use-filter-tasks';
 import TaskFormDialog from './task-form-dialog';
 import TaskDeleteDialog from './task-delete-dialog';
 
@@ -37,8 +38,8 @@ const statusColors = {
 
 export default function TaskList() {
   const parentRef = useRef<HTMLDivElement>(null);
-  const tasks = useTaskStore(state => state.tasks);
   const markTaskAsCompleted = useTaskStore(state => state.markTaskAsCompleted);
+  const { tasks, searchValue } = useFilterTasks();
 
   const rowVirtualizer = useVirtualizer({
     count: tasks.length,
@@ -78,7 +79,7 @@ export default function TaskList() {
                     No tasks found
                   </p>
                   <p className="text-sm text-slate-500 dark:text-slate-500">
-                    Create a new task to get started
+                    {!searchValue && 'Create a new task to get started'}
                   </p>
                 </TableCell>
               </TableRow>
