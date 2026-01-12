@@ -39,7 +39,8 @@ const statusColors = {
 export default function TaskList() {
   const parentRef = useRef<HTMLDivElement>(null);
   const markTaskAsCompleted = useTaskStore(state => state.markTaskAsCompleted);
-  const { tasks, searchValue } = useFilterTasks();
+  const tasksData = useTaskStore(state => state.tasks);
+  const tasks = useFilterTasks();
 
   const rowVirtualizer = useVirtualizer({
     count: tasks.length,
@@ -79,7 +80,8 @@ export default function TaskList() {
                     No tasks found
                   </p>
                   <p className="text-sm text-slate-500 dark:text-slate-500">
-                    {!searchValue && 'Create a new task to get started'}
+                    {tasksData.length === 0 &&
+                      'Create a new task to get started'}
                   </p>
                 </TableCell>
               </TableRow>

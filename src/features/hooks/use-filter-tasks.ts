@@ -6,6 +6,7 @@ import { useTaskStore } from '../stores/use-task-store';
 export default function useFilterTasks() {
   const tasks = useTaskStore(state => state.tasks);
   const searchQuery = useTaskFilter(state => state.searchQuery);
+  const status = useTaskFilter(state => state.status);
 
   const searchValue = useDebounce(searchQuery, 400);
 
@@ -22,8 +23,12 @@ export default function useFilterTasks() {
       );
     }
 
-    return result;
-  }, [searchValue, tasks]);
+    if (status !== 'all') {
+      result = result.filter(task => task.status === status);
+    }
 
-  return { searchValue, tasks: filteredtask };
+    return result;
+  }, [searchValue, tasks, status]);
+
+  return filteredtask;
 }
