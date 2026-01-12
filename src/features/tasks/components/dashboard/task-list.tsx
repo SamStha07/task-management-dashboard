@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { Suspense, lazy, useRef } from 'react';
 import { Edit2, Trash2 } from 'lucide-react';
 import { useVirtualizer } from '@tanstack/react-virtual';
 import {
@@ -13,12 +13,16 @@ import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { useTaskStore } from '@/features/tasks/stores/use-task-store';
 import useFilterTasks from '@/features/tasks/hooks/use-filter-tasks';
-import TaskFormDialog from './task-form-dialog';
-import TaskDeleteDialog from './task-delete-dialog';
+// import TaskFormDialog from './task-form-dialog';
+// import TaskDeleteDialog from './task-delete-dialog';
 import TaskStatusBadge from './task-status-badge';
 import TaskDueDate from './task-due-date';
 import TaskTags from './task-tags';
 import TaskPriority from './task-priority';
+import { Skeleton } from '@/components/ui/skeleton';
+
+const TaskFormDialog = lazy(() => import('./task-form-dialog'));
+const TaskDeleteDialog = lazy(() => import('./task-delete-dialog'));
 
 export default function TaskList() {
   const parentRef = useRef<HTMLDivElement>(null);
@@ -128,34 +132,40 @@ export default function TaskList() {
                   <TableCell>
                     <TaskTags task={task} />
                   </TableCell>
-                  <TableCell className="space-x-2 text-right">
-                    <TaskFormDialog
-                      task={task}
-                      trigger={
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          className="h-8 w-8 hover:bg-white/80"
-                          title="Edit task"
-                        >
-                          <Edit2 className="h-3.5 w-3.5" />
-                        </Button>
-                      }
-                    />
+                  <TableCell className="text-right">
+                    <div className="flex justify-end gap-2">
+                      <Suspense fallback={<Skeleton className="h-8 w-8" />}>
+                        <TaskFormDialog
+                          task={task}
+                          trigger={
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              className="h-8 w-8 hover:bg-white/80"
+                              title="Edit task"
+                            >
+                              <Edit2 className="h-3.5 w-3.5" />
+                            </Button>
+                          }
+                        />
+                      </Suspense>
 
-                    <TaskDeleteDialog
-                      task={task}
-                      trigger={
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          className="h-8 w-8 hover:bg-white/80"
-                          title="Delete task"
-                        >
-                          <Trash2 className="h-3.5 w-3.5 text-red-500" />
-                        </Button>
-                      }
-                    />
+                      <Suspense fallback={<Skeleton className="h-8 w-8" />}>
+                        <TaskDeleteDialog
+                          task={task}
+                          trigger={
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              className="h-8 w-8 hover:bg-white/80"
+                              title="Delete task"
+                            >
+                              <Trash2 className="h-3.5 w-3.5 text-red-500" />
+                            </Button>
+                          }
+                        />
+                      </Suspense>
+                    </div>
                   </TableCell>
                 </TableRow>
               );
