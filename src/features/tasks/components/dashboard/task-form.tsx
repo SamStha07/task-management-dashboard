@@ -1,8 +1,11 @@
 import { useForm } from 'react-hook-form';
 import { CalendarIcon } from 'lucide-react';
 import { zodResolver } from '@hookform/resolvers/zod';
-import type { Task } from '@/features/libs/types';
-import { taskFormSchema, type TaskFormData } from '@/features/libs/validations';
+import type { Task } from '@/features/tasks/libs/types';
+import {
+  taskFormSchema,
+  type TaskFormData,
+} from '@/features/tasks/libs/validations';
 import {
   Form,
   FormControl,
@@ -28,7 +31,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover';
-import { dateFormat } from '@/features/libs/date-format';
+import { dateFormat } from '@/features/tasks/libs/date-format';
 
 interface TaskFormProps {
   task?: Task;

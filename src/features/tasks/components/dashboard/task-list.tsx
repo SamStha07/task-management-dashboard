@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { Calendar, Edit2, Trash2 } from 'lucide-react';
+import { Edit2, Trash2 } from 'lucide-react';
 import { useVirtualizer } from '@tanstack/react-virtual';
 import {
   Table,
@@ -9,32 +9,16 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
-import { checkOverdue } from '@/features/utils/check-overdue';
-import { dateFormat } from '@/features/libs/date-format';
-import { useTaskStore } from '@/features/stores/use-task-store';
-import useFilterTasks from '@/features/hooks/use-filter-tasks';
+import { useTaskStore } from '@/features/tasks/stores/use-task-store';
+import useFilterTasks from '@/features/tasks/hooks/use-filter-tasks';
 import TaskFormDialog from './task-form-dialog';
 import TaskDeleteDialog from './task-delete-dialog';
-
-const priorityColors = {
-  low: 'bg-blue-50 text-blue-700 dark:bg-blue-950/50 dark:text-blue-400 border border-blue-200 dark:border-blue-900/50',
-  medium:
-    'bg-amber-50 text-amber-700 dark:bg-amber-950/50 dark:text-amber-400 border border-amber-200 dark:border-amber-900/50',
-  high: 'bg-orange-50 text-orange-700 dark:bg-orange-950/50 dark:text-orange-400 border border-orange-200 dark:border-orange-900/50',
-  critical:
-    'bg-red-50 text-red-700 dark:bg-red-950/50 dark:text-red-400 border border-red-200 dark:border-red-900/50',
-};
-
-const statusColors = {
-  todo: 'bg-slate-50 text-slate-700 dark:bg-slate-900/50 dark:text-slate-400 border border-slate-200 dark:border-slate-800',
-  'in-progress':
-    'bg-purple-50 text-purple-700 dark:bg-purple-950/50 dark:text-purple-400 border border-purple-200 dark:border-purple-900/50',
-  completed:
-    'bg-emerald-50 text-emerald-700 dark:bg-emerald-950/50 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-900/50',
-};
+import TaskStatusBadge from './task-status-badge';
+import TaskDueDate from './task-due-date';
+import TaskTags from './task-tags';
+import TaskPriority from './task-priority';
 
 export default function TaskList() {
   const parentRef = useRef<HTMLDivElement>(null);
@@ -92,11 +76,6 @@ export default function TaskList() {
             {rowVirtualizer.getVirtualItems().map((virtualRow, index) => {
               const task = tasks[virtualRow.index];
 
-              const isOverdue = checkOverdue({
-                dueDate: task.dueDate,
-                status: task.status,
-              });
-
               return (
                 <TableRow
                   key={task.id}
@@ -139,51 +118,16 @@ export default function TaskList() {
                     </div>
                   </TableCell>
                   <TableCell>
-                    <Badge className={priorityColors[task.priority]}>
-                      {task.priority}
-                    </Badge>
+                    <TaskPriority priority={task.priority} />
                   </TableCell>
                   <TableCell>
-                    <Badge
-                      className={`${statusColors[task.status]} capitalize`}
-                    >
-                      {task.status === 'in-progress'
-                        ? 'In Progress'
-                        : task.status}
-                    </Badge>
+                    <TaskStatusBadge status={task.status} />
                   </TableCell>
                   <TableCell>
-                    <div
-                      className={`flex items-center gap-1.5 text-xs ${
-                        isOverdue &&
-                        'font-medium text-red-600 dark:text-red-500'
-                      }`}
-                    >
-                      <Calendar className="h-3.5 w-3.5" />
-                      <span>
-                        {dateFormat(task.dueDate)}
-                        {isOverdue && ' (Overdue)'}
-                      </span>
-                    </div>
+                    <TaskDueDate task={task} />
                   </TableCell>
                   <TableCell>
-                    {!task.tags ? (
-                      <span className="text-muted-foreground text-xs italic">
-                        No tags
-                      </span>
-                    ) : (
-                      <div className="flex flex-wrap gap-1.5">
-                        {task.tags?.map((tag, index) => (
-                          <Badge
-                            key={index}
-                            variant="outline"
-                            className="px-2 py-0.5"
-                          >
-                            {tag}
-                          </Badge>
-                        ))}
-                      </div>
-                    )}
+                    <TaskTags task={task} />
                   </TableCell>
                   <TableCell className="space-x-2 text-right">
                     <TaskFormDialog

@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/button';
-import type { TaskStatus } from '@/features/libs/types';
-import { useTaskFilter } from '@/features/stores/use-task-filter';
+import type { TaskStatus } from '@/features/tasks/libs/types';
+import { useTaskFilter } from '@/features/tasks/stores/use-task-filter';
 
 const filterOptions: { label: string; value: TaskStatus | 'all' }[] = [
   { label: 'All', value: 'all' },

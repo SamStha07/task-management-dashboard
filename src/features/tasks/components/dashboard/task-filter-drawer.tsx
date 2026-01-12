@@ -1,7 +1,5 @@
 import { SlidersHorizontal } from 'lucide-react';
-import useToogle from '@/hooks/use-toogle';
-import TaskFilters from './task-filters';
-import TaskSort from './task-sort';
+import { Button } from '@/components/ui/button';
 import {
   Drawer,
   DrawerClose,
@@ -11,8 +9,10 @@ import {
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
-} from '../../../components/ui/drawer';
-import { Button } from '../../../components/ui/button';
+} from '@/components/ui/drawer';
+import useToogle from '@/hooks/use-toogle';
+import TaskFilters from './task-filters';
+import TaskSort from './task-sort';
 
 export const TaskFilterDrawer = () => {
   const { open, setOpen } = useToogle();

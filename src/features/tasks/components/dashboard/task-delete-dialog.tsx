@@ -10,8 +10,8 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 import useToogle from '@/hooks/use-toogle';
-import type { Task } from '@/features/libs/types';
-import { useTaskStore } from '@/features/stores/use-task-store';
+import type { Task } from '@/features/tasks/libs/types';
+import { useTaskStore } from '@/features/tasks/stores/use-task-store';
 
 interface TaskDeleteDialogProps {
   trigger: React.ReactNode;

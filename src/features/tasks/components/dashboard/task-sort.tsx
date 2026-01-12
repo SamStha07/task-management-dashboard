@@ -5,8 +5,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import type { SortField } from '@/features/libs/types';
-import { useTaskFilter } from '@/features/stores/use-task-filter';
+import type { SortField } from '@/features/tasks/libs/types';
+import { useTaskFilter } from '@/features/tasks/stores/use-task-filter';
 
 const sortOptions: { label: string; value: SortField }[] = [
   { label: 'Due Date', value: 'dueDate' },

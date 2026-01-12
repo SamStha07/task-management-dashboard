@@ -10,9 +10,9 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 import useToogle from '@/hooks/use-toogle';
-import type { Task } from '@/features/libs/types';
-import type { TaskFormData } from '@/features/libs/validations';
-import { useTaskStore } from '@/features/stores/use-task-store';
+import type { Task } from '@/features/tasks/libs/types';
+import type { TaskFormData } from '@/features/tasks/libs/validations';
+import { useTaskStore } from '@/features/tasks/stores/use-task-store';
 import TaskForm from './task-form';
 
 interface TaskFormDialogProps {

@@ -1,4 +1,4 @@
-import TaskDashboardView from './features/views/task-dashboard-view';
+import TaskDashboardView from './features/tasks/views/task-dashboard-view';
 
 function App() {
   return (
