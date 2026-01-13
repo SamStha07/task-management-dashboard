@@ -10,22 +10,22 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { Button } from '@/components/ui/button';
-import { Checkbox } from '@/components/ui/checkbox';
 import { Skeleton } from '@/components/ui/skeleton';
-import { useTaskStore } from '@/features/tasks/stores/use-task-store';
 import useFilterTasks from '@/features/tasks/hooks/use-filter-tasks';
 import TaskStatusBadge from './task-status-badge';
 import TaskDueDate from './task-due-date';
 import TaskTags from './task-tags';
 import TaskPriority from './task-priority';
+import TaskTitleDescription from './task-title-description';
+import TaskUpdateStatus from './task-update-status';
+import TaskEmptyBox from './task-empty-box';
 
 const TaskFormDialog = lazy(() => import('./task-form-dialog'));
 const TaskDeleteDialog = lazy(() => import('./task-delete-dialog'));
 
 export default function TaskList() {
   const parentRef = useRef<HTMLDivElement>(null);
-  const markTaskAsCompleted = useTaskStore(state => state.markTaskAsCompleted);
-  const tasksData = useTaskStore(state => state.tasks);
+
   const tasks = useFilterTasks();
 
   const rowVirtualizer = useVirtualizer({
@@ -58,23 +58,10 @@ export default function TaskList() {
             </TableRow>
           </TableHeader>
 
-          {tasks.length === 0 && (
-            <TableBody>
-              <TableRow className="w-full">
-                <TableCell colSpan={7} className="py-10 text-center">
-                  <p className="mb-1 text-base text-slate-600 dark:text-slate-400">
-                    No tasks found
-                  </p>
-                  <p className="text-sm text-slate-500 dark:text-slate-500">
-                    {tasksData.length === 0 &&
-                      'Create a new task to get started'}
-                  </p>
-                </TableCell>
-              </TableRow>
-            </TableBody>
-          )}
-
           <TableBody>
+            {/* show empty box when no tasks */}
+            {tasks.length === 0 && <TaskEmptyBox />}
+            {/* show virtualized tasks */}
             {rowVirtualizer.getVirtualItems().map((virtualRow, index) => {
               const task = tasks[virtualRow.index];
 
@@ -89,33 +76,11 @@ export default function TaskList() {
                   }}
                 >
                   <TableCell>
-                    <Checkbox
-                      checked={task.status === 'completed'}
-                      onCheckedChange={() => markTaskAsCompleted(task.id)}
-                      aria-label="Mark task as complete"
-                      className="h-5 w-5"
-                    />
+                    <TaskUpdateStatus task={task} />
                   </TableCell>
-                  <TableCell className="">
+                  <TableCell>
                     <div className="w-[200px] lg:w-[500px]">
-                      <h2
-                        className={`font-medium first-letter:capitalize ${
-                          task.status === 'completed'
-                            ? 'text-slate-400 line-through dark:text-slate-600'
-                            : 'text-slate-900 dark:text-white'
-                        }`}
-                      >
-                        {task.title}
-                      </h2>
-                      <p
-                        className={`truncate first-letter:capitalize ${
-                          task.status === 'completed'
-                            ? 'text-slate-400 line-through dark:text-slate-600'
-                            : 'text-slate-900 dark:text-white'
-                        }`}
-                      >
-                        {task.description}
-                      </p>
+                      <TaskTitleDescription task={task} />
                     </div>
                   </TableCell>
                   <TableCell>
