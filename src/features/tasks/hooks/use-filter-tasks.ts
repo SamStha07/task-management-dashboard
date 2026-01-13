@@ -1,13 +1,13 @@
 import { useMemo } from 'react';
 import useDebounce from '@/hooks/use-debounce';
-import { useTaskFilter } from '../stores/use-task-filter';
+import { useTaskFilterStore } from '../stores/use-task-filter-store';
 import { useTaskStore } from '../stores/use-task-store';
 
 export default function useFilterTasks() {
   const tasks = useTaskStore(state => state.tasks);
-  const searchQuery = useTaskFilter(state => state.searchQuery);
-  const status = useTaskFilter(state => state.status);
-  const sort = useTaskFilter(state => state.sort);
+  const searchQuery = useTaskFilterStore(state => state.searchQuery);
+  const status = useTaskFilterStore(state => state.status);
+  const sort = useTaskFilterStore(state => state.sort);
 
   const searchValue = useDebounce(searchQuery, 400);
 

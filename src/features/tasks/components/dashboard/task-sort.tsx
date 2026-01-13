@@ -6,7 +6,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import type { SortField } from '@/features/tasks/libs/types';
-import { useTaskFilter } from '@/features/tasks/stores/use-task-filter';
+import { useTaskFilterStore } from '@/features/tasks/stores/use-task-filter-store';
 
 const sortOptions: { label: string; value: SortField }[] = [
   { label: 'Due Date', value: 'dueDate' },
@@ -15,7 +15,7 @@ const sortOptions: { label: string; value: SortField }[] = [
 ];
 
 export default function TaskSort() {
-  const { sort, setSort } = useTaskFilter();
+  const { sort, setSort } = useTaskFilterStore();
 
   return (
     <div className="flex items-center gap-2">

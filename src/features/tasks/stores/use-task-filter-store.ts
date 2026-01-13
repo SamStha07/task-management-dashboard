@@ -11,7 +11,7 @@ type TaskFilterStore = {
   setSort: (sort: SortField) => void;
 };
 
-export const useTaskFilter = create<TaskFilterStore>()(
+export const useTaskFilterStore = create<TaskFilterStore>()(
   persist(
     set => ({
       status: 'all',
