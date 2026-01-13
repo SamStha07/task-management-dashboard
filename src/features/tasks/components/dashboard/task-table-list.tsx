@@ -1,5 +1,4 @@
-import { Suspense, lazy, useRef, useState } from 'react';
-import { useVirtualizer } from '@tanstack/react-virtual';
+import { Suspense, lazy } from 'react';
 import {
   Table,
   TableBody,
@@ -7,28 +6,25 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import useFilterTasks from '@/features/tasks/hooks/use-filter-tasks';
 import TaskEmptyBox from './task-empty-box';
 import TaskListRow from './task-list-row';
-import type { Task } from '../../libs/types';
+import TaskTableSkeleton from './task-table-skeleton';
+import useTaskTableList from '../../hooks/use-task-table-list';
 
 const TaskFormDialog = lazy(() => import('./task-form-dialog'));
 const TaskDeleteDialog = lazy(() => import('./task-delete-dialog'));
 
 export default function TaskTableList() {
-  const parentRef = useRef<HTMLDivElement>(null);
-
-  const [editTask, setEditTask] = useState<null | Task>(null);
-  const [deleteTask, setDeleteTask] = useState<null | Task>(null);
-
-  const tasks = useFilterTasks();
-
-  const rowVirtualizer = useVirtualizer({
-    count: tasks.length,
-    getScrollElement: () => parentRef.current,
-    estimateSize: () => 60,
-    overscan: 10,
-  });
+  const {
+    deleteTask,
+    editTask,
+    isLoading,
+    rowVirtualizer,
+    parentRef,
+    setDeleteTask,
+    setEditTask,
+    tasks,
+  } = useTaskTableList();
 
   return (
     <>
@@ -48,8 +44,10 @@ export default function TaskTableList() {
             </TableHeader>
 
             <TableBody>
-              {/* show empty box when no tasks */}
-              {tasks.length === 0 && <TaskEmptyBox />}
+              {/* show loading skeleton */}
+              {isLoading && <TaskTableSkeleton />}
+              {/* show empty message when no tasks */}
+              {!isLoading && tasks.length === 0 && <TaskEmptyBox />}
               {/* show virtualized tasks */}
               {rowVirtualizer.getVirtualItems().map((virtualRow, index) => {
                 const task = tasks[virtualRow.index];

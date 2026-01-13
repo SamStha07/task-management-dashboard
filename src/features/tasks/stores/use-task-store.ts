@@ -5,6 +5,8 @@ import { taskData } from '../libs/tasks-data';
 
 type TaskStore = {
   tasks: Task[];
+  isLoading: boolean;
+  setIsLoading: (loading: boolean) => void;
   addTask: (input: CreateTaskInput) => void;
   updateTask: (input: UpdateTaskInput) => void;
   deleteTask: (id: string) => void;
@@ -14,7 +16,9 @@ type TaskStore = {
 export const useTaskStore = create<TaskStore>()(
   persist(
     (set, get) => ({
-      tasks: taskData,
+      tasks: taskData, // initial tasks if no tasks exist in the storage
+      isLoading: false,
+      setIsLoading: (loading: boolean) => set({ isLoading: loading }),
       addTask: input => {
         const now = new Date().toISOString();
         const newTask: Task = {

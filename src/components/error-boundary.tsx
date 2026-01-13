@@ -1,16 +1,19 @@
 import { Component } from 'react';
 import type { ErrorInfo, ReactNode } from 'react';
 import { Button } from './ui/button';
+import { cn } from '@/lib/utils';
 
 interface Props {
   children: ReactNode;
   fallback?: ReactNode;
+  className?: string;
 }
 
 interface State {
   hasError: boolean;
   error: Error | null;
   errorInfo: ErrorInfo | null;
+  resetKey: number;
 }
 
 export class ErrorBoundary extends Component<Props, State> {
@@ -20,6 +23,7 @@ export class ErrorBoundary extends Component<Props, State> {
       hasError: false,
       error: null,
       errorInfo: null,
+      resetKey: Date.now(),
     };
   }
 
@@ -40,6 +44,7 @@ export class ErrorBoundary extends Component<Props, State> {
       hasError: false,
       error: null,
       errorInfo: null,
+      resetKey: Date.now(),
     });
   };
 
@@ -50,7 +55,12 @@ export class ErrorBoundary extends Component<Props, State> {
       }
 
       return (
-        <div className="flex min-h-screen items-center justify-center">
+        <div
+          className={cn(
+            'flex min-h-screen items-center justify-center',
+            this.props.className
+          )}
+        >
           <div className="w-full max-w-2xl p-6">
             <div className="text-center">
               <h1 className="mb-4 text-2xl font-bold text-red-600 dark:text-red-400">
@@ -93,7 +103,7 @@ export class ErrorBoundary extends Component<Props, State> {
         </div>
       );
     }
-
-    return this.props.children;
+    // key ensures full remount if Try Again is clicked
+    return <div key={this.state.resetKey}>{this.props.children}</div>;
   }
 }
