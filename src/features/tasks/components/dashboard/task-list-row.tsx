@@ -25,9 +25,7 @@ const TaskListRow = memo(
           <TaskUpdateStatus task={task} />
         </TableCell>
         <TableCell>
-          <div className="w-[200px] lg:w-[500px]">
-            <TaskTitleDescription task={task} />
-          </div>
+          <TaskTitleDescription task={task} />
         </TableCell>
         <TableCell>
           <TaskPriority priority={task.priority} />

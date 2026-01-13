@@ -27,7 +27,7 @@ export default function TaskTableList() {
     count: tasks.length,
     getScrollElement: () => parentRef.current,
     estimateSize: () => 60,
-    overscan: 20,
+    overscan: 10,
   });
 
   return (
@@ -38,7 +38,7 @@ export default function TaskTableList() {
             <TableHeader>
               <TableRow>
                 <TableHead className="w-[40px]"></TableHead>
-                <TableHead className="w-[200px] lg:w-[500px]">Task</TableHead>
+                <TableHead className="w-[200px] lg:w-[400px]">Task</TableHead>
                 <TableHead className="w-[100px]">Priority</TableHead>
                 <TableHead className="w-[100px]">Status</TableHead>
                 <TableHead>Due Date</TableHead>

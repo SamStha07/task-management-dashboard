@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import type { CreateTaskInput, Task, UpdateTaskInput } from '../libs/types';
+import { taskData } from '../libs/tasks-data';
 
 type TaskStore = {
   tasks: Task[];
@@ -13,7 +14,7 @@ type TaskStore = {
 export const useTaskStore = create<TaskStore>()(
   persist(
     (set, get) => ({
-      tasks: [],
+      tasks: taskData,
       addTask: input => {
         const now = new Date().toISOString();
         const newTask: Task = {
