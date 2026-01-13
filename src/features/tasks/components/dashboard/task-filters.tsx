@@ -1,3 +1,4 @@
+import { useCallback, memo } from 'react';
 import { Button } from '@/components/ui/button';
 import type { TaskStatus } from '@/features/tasks/libs/types';
 import { useTaskFilterStore } from '@/features/tasks/stores/use-task-filter-store';
@@ -9,8 +10,15 @@ const filterOptions: { label: string; value: TaskStatus | 'all' }[] = [
   { label: 'Completed', value: 'completed' },
 ];
 
-export default function TaskFilters() {
+function TaskFilters() {
   const { setStatus, status } = useTaskFilterStore();
+
+  const handleStatusChange = useCallback(
+    (value: TaskStatus | 'all') => {
+      setStatus(value);
+    },
+    [setStatus]
+  );
 
   return (
     <div className="flex flex-wrap gap-2">
@@ -19,7 +27,7 @@ export default function TaskFilters() {
           key={option.value}
           size="sm"
           variant={status === option.value ? 'default' : 'outline'}
-          onClick={() => setStatus(option.value)}
+          onClick={() => handleStatusChange(option.value)}
         >
           {option.label}
         </Button>
@@ -27,3 +35,5 @@ export default function TaskFilters() {
     </div>
   );
 }
+
+export default memo(TaskFilters);

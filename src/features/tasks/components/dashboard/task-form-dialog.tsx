@@ -1,16 +1,11 @@
-import { Plus } from 'lucide-react';
-import React from 'react';
 import { toast } from 'sonner';
-import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from '@/components/ui/dialog';
-import useToogle from '@/hooks/use-toogle';
 import type { Task } from '@/features/tasks/libs/types';
 import type { TaskFormData } from '@/features/tasks/libs/validations';
 import { useTaskStore } from '@/features/tasks/stores/use-task-store';
@@ -18,11 +13,15 @@ import TaskForm from './task-form';
 
 interface TaskFormDialogProps {
   task?: Task;
-  trigger?: React.ReactNode;
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
 }
 
-export default function TaskFormDialog({ task, trigger }: TaskFormDialogProps) {
-  const { open, setOpen } = useToogle();
+export default function TaskFormDialog({
+  task,
+  open,
+  onOpenChange,
+}: TaskFormDialogProps) {
   const addTask = useTaskStore(state => state.addTask);
   const updateTask = useTaskStore(state => state.updateTask);
 
@@ -37,19 +36,15 @@ export default function TaskFormDialog({ task, trigger }: TaskFormDialogProps) {
       addTask(data);
       toast.success('Task added successfully');
     }
-    setOpen(false);
+    onOpenChange(false);
   };
 
-  const defaultTrigger = (
-    <Button>
-      <Plus className="mr-1 h-4 w-4" />
-      Add Task
-    </Button>
-  );
+  const handleCancel = () => {
+    onOpenChange(false);
+  };
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>{trigger || defaultTrigger}</DialogTrigger>
+    <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-2xl space-y-4">
         <DialogHeader>
           <DialogTitle>{task ? 'Edit Task' : 'Create New Task'}</DialogTitle>
@@ -59,11 +54,7 @@ export default function TaskFormDialog({ task, trigger }: TaskFormDialogProps) {
               : 'Fill in the details to create a new task.'}
           </DialogDescription>
         </DialogHeader>
-        <TaskForm
-          task={task}
-          onSubmit={handleSubmit}
-          onCancel={() => setOpen(false)}
-        />
+        <TaskForm task={task} onSubmit={handleSubmit} onCancel={handleCancel} />
       </DialogContent>
     </Dialog>
   );

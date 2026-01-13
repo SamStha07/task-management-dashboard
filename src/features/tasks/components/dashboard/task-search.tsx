@@ -1,3 +1,4 @@
+import { useCallback } from 'react';
 import { Search, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -6,9 +7,16 @@ import { useTaskFilterStore } from '@/features/tasks/stores/use-task-filter-stor
 export default function TaskSearch() {
   const { searchQuery, setSearchQuery } = useTaskFilterStore();
 
-  const handleClear = () => {
+  const handleClear = useCallback(() => {
     setSearchQuery('');
-  };
+  }, [setSearchQuery]);
+
+  const handleChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setSearchQuery(e.target.value);
+    },
+    [setSearchQuery]
+  );
 
   return (
     <div className="relative w-full sm:w-full sm:max-w-sm">
@@ -17,7 +25,7 @@ export default function TaskSearch() {
         type="text"
         placeholder="Search tasks..."
         value={searchQuery}
-        onChange={e => setSearchQuery(e.target.value)}
+        onChange={handleChange}
         className="pr-10 pl-10"
       />
       {searchQuery && (

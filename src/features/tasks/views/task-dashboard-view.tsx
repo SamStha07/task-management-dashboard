@@ -1,7 +1,7 @@
 import ContainerLayout from '@/components/layouts/container-layout';
-import DashboardHeader from '../components/dashboard/dashboard-header';
-import TaskList from '../components/dashboard/task-list';
 import ModeToggle from '@/components/mode-toggle';
+import DashboardHeader from '../components/dashboard/dashboard-header';
+import TaskTableList from '../components/dashboard/task-table-list';
 
 export default function TaskDashboardView() {
   return (
@@ -10,7 +10,7 @@ export default function TaskDashboardView() {
         <ModeToggle />
       </div>
       <DashboardHeader />
-      <TaskList />
+      <TaskTableList />
     </ContainerLayout>
   );
 }

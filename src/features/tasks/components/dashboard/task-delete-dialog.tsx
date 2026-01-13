@@ -1,4 +1,3 @@
-import type React from 'react';
 import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
 import {
@@ -8,32 +7,31 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from '@/components/ui/dialog';
-import useToogle from '@/hooks/use-toogle';
 import type { Task } from '@/features/tasks/libs/types';
 import { useTaskStore } from '@/features/tasks/stores/use-task-store';
 
 interface TaskDeleteDialogProps {
-  trigger: React.ReactNode;
   task: Task;
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
 }
 
 export default function TaskDeleteDialog({
-  trigger,
   task,
+  open,
+  onOpenChange,
 }: TaskDeleteDialogProps) {
-  const { open, setOpen } = useToogle();
   const deleteTask = useTaskStore(state => state.deleteTask);
 
   const handleDelete = () => {
     deleteTask(task.id);
     toast.success('Task deleted successfully');
+    onOpenChange(false);
   };
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>{trigger}</DialogTrigger>
+    <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Delete Task</DialogTitle>
@@ -42,8 +40,8 @@ export default function TaskDeleteDialog({
             be undone.
           </DialogDescription>
         </DialogHeader>
-        <DialogFooter>
-          <Button variant="outline" onClick={() => setOpen(false)}>
+        <DialogFooter className="mt-4">
+          <Button variant="outline" onClick={() => onOpenChange(false)}>
             Cancel
           </Button>
           <Button variant="destructive" onClick={handleDelete}>
