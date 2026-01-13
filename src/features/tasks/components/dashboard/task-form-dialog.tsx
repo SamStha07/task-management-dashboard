@@ -1,5 +1,6 @@
 import { Plus } from 'lucide-react';
 import React from 'react';
+import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -31,8 +32,10 @@ export default function TaskFormDialog({ task, trigger }: TaskFormDialogProps) {
         id: task.id,
         ...data,
       });
+      toast.success('Task updated successfully');
     } else {
       addTask(data);
+      toast.success('Task added successfully');
     }
     setOpen(false);
   };

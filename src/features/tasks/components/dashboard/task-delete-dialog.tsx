@@ -1,4 +1,5 @@
 import type React from 'react';
+import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -27,6 +28,7 @@ export default function TaskDeleteDialog({
 
   const handleDelete = () => {
     deleteTask(task.id);
+    toast.success('Task deleted successfully');
   };
 
   return (
