@@ -6,8 +6,8 @@ import { useTaskFilterStore } from '../../stores/use-task-filter-store';
 
 describe('TaskFilter', () => {
   beforeEach(() => {
-    render(<TaskFilters />);
     useTaskFilterStore.setState({ status: 'all' });
+    render(<TaskFilters />);
   });
 
   it('should render all filter options', () => {

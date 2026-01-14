@@ -6,8 +6,8 @@ import { useTaskFilterStore } from '../../stores/use-task-filter-store';
 
 describe('TaskSearch', () => {
   beforeEach(() => {
-    render(<TaskSearch />);
     useTaskFilterStore.setState({ searchQuery: '' });
+    render(<TaskSearch />);
   });
 
   it('should display search input field', async () => {
