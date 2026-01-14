@@ -1,4 +1,5 @@
 # Task Management Dashboard
+🔗 **Live Demo**: [https://task-management-dashboard-vert.vercel.app/](https://task-management-dashboard-vert.vercel.app/)
 
 A modern, feature-rich task management application built with React and TypeScript. This dashboard provides a comprehensive interface for managing tasks with advanced filtering, sorting, and search capabilities.
 
@@ -79,7 +80,7 @@ The Task Management Dashboard is a client-side web application that enables user
 
 1. Clone the repository:
 ```bash
-git clone <[repository-url](https://github.com/SamStha07/task-management-dashboard)>
+git clone [https://github.com/SamStha07/task-management-dashboard](https://github.com/SamStha07/task-management-dashboard)
 cd task-management-dashboard
 ```
 
