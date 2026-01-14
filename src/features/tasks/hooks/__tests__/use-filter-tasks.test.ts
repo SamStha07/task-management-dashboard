@@ -1,9 +1,9 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { renderHook, act } from '@testing-library/react';
-import useFilterTasks from './use-filter-tasks';
-import { useTaskStore } from '../stores/use-task-store';
-import { useTaskFilterStore } from '../stores/use-task-filter-store';
-import type { Task } from '../libs/types';
+import useFilterTasks from '../use-filter-tasks';
+import { useTaskStore } from '../../stores/use-task-store';
+import { useTaskFilterStore } from '../../stores/use-task-filter-store';
+import type { Task } from '../../libs/types';
 
 const mockData: Task[] = [
   {
