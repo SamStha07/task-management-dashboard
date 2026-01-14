@@ -80,7 +80,7 @@ The Task Management Dashboard is a client-side web application that enables user
 
 1. Clone the repository:
 ```bash
-git clone [https://github.com/SamStha07/task-management-dashboard](https://github.com/SamStha07/task-management-dashboard)
+git clone https://github.com/SamStha07/task-management-dashboard
 cd task-management-dashboard
 ```
 
