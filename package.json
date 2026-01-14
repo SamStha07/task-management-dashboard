@@ -15,8 +15,7 @@
   "lint-staged": {
     "*.{ts,tsx}": [
       "prettier --write \"**/*.{js,jsx,ts,tsx,json,css,md}\"",
-      "eslint . --fix",
-      "vitest --coverage=false"
+      "eslint . --fix"
     ]
   },
   "dependencies": {

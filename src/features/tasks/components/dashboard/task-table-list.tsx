@@ -51,20 +51,15 @@ export default function TaskTableList() {
               {/* show virtualized tasks */}
               {rowVirtualizer.getVirtualItems().map((virtualRow, index) => {
                 const task = tasks[virtualRow.index];
-                const rowStyle = {
-                  height: `${virtualRow.size}px`,
-                  transform: `translateY(${
-                    virtualRow.start - index * virtualRow.size
-                  }px)`,
-                };
 
                 return (
                   <TaskListRow
+                    virtualRow={virtualRow}
+                    index={index}
                     key={task.id}
                     task={task}
-                    style={rowStyle}
-                    onEdit={() => setEditTask(task)}
-                    onDelete={() => setDeleteTask(task)}
+                    onEdit={setEditTask}
+                    onDelete={setDeleteTask}
                   />
                 );
               })}
