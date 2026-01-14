@@ -16,7 +16,7 @@
     "*.{ts,tsx}": [
       "prettier --write \"**/*.{js,jsx,ts,tsx,json,css,md}\"",
       "eslint . --fix",
-      "vitest"
+      "vitest --coverage=false"
     ]
   },
   "dependencies": {
