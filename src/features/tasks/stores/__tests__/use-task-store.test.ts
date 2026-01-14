@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { useTaskStore } from './use-task-store';
+import { useTaskStore } from '../use-task-store';
 
 // You can mock global variables that are not present with jsdom or node by using vi.stubGlobal helper. It will put the value of the global variable into a globalThis object.
 vi.stubGlobal('crypto', {

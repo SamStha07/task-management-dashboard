@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { beforeEach, describe, expect, it } from 'vitest';
-import { useTaskFilterStore } from '../../stores/use-task-filter-store';
-import TaskSort from './task-sort';
+import { useTaskFilterStore } from '../../../stores/use-task-filter-store';
+import TaskSort from '../task-sort';
 
 describe('TastSort', () => {
   beforeEach(() => {

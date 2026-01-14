@@ -1,8 +1,8 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { beforeEach, describe, expect, it } from 'vitest';
-import TaskFilters from './task-filters';
-import { useTaskFilterStore } from '../../stores/use-task-filter-store';
+import TaskFilters from '../task-filters';
+import { useTaskFilterStore } from '../../../stores/use-task-filter-store';
 
 describe('TaskFilter', () => {
   beforeEach(() => {
